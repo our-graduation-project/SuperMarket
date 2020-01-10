@@ -22,6 +22,18 @@ public class Orders {
 
     private String remark2;
 
+    public Orders() {
+    }
+
+    public Orders(String orderName, Date orderTime, Integer orderStatus, Integer salePrice, String productName, String typeName) {
+        this.orderName = orderName;
+        this.orderTime = orderTime;
+        this.orderStatus = orderStatus;
+        this.salePrice = salePrice;
+        this.productName = productName;
+        this.typeName = typeName;
+    }
+
     public Integer getOrderId() {
         return orderId;
     }

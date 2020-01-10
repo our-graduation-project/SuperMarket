@@ -348,4 +348,20 @@
       remark2 = #{remark2,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
+
+
+  <insert id="addBatchOrders" parameterType="java.util.List">
+    insert into `orders`
+    (order_name,order_time,order_status,sale_price,product_name,type_name)
+     values
+    <foreach collection="list" separator="," item="Users">(#{Users.orderName,jdbcType=VARCHAR},
+      #{Users.orderTime,jdbcType=TIMESTAMP},
+      #{Users.orderStatus,jdbcType=INTEGER},
+      #{Users.salePrice,jdbcType=INTEGER},
+      #{Users.productName,jdbcType=VARCHAR},
+      #{Users.typeName,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+
 </mapper>

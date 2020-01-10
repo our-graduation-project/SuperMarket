@@ -378,4 +378,24 @@
       remark2 = #{remark2,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+
+
+
+
+
+  <insert id="addBatchUsers" parameterType="java.util.List">
+    insert into `user` (user_name,password,email,nick_name,
+    phone,address,age,sex) values
+    <foreach collection="list" separator="," item="Users">
+      (#{Users.userName,jdbcType=VARCHAR},
+      #{Users.password,jdbcType=VARCHAR},
+      #{Users.email,jdbcType=VARCHAR},
+      #{Users.nickName,jdbcType=VARCHAR},
+      #{Users.phone,jdbcType=VARCHAR},
+      #{Users.address,jdbcType=VARCHAR},
+      #{Users.age,jdbcType=INTEGER},
+      #{Users.sex,jdbcType=TINYINT})
+    </foreach>
+  </insert>
+
 </mapper>

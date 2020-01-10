@@ -24,6 +24,20 @@ public class User {
 
     private String remark2;
 
+    public User() {
+    }
+
+    public User(String userName, String password, String email, String nickName, String phone, String address, Integer age, Boolean sex) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.nickName = nickName;
+        this.phone = phone;
+        this.address = address;
+        this.age = age;
+        this.sex = sex;
+    }
+
     public Integer getUserId() {
         return userId;
     }

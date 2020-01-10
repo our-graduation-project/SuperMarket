@@ -3,8 +3,11 @@ package com.mxz.supermarket.mapper;
 import com.mxz.supermarket.model.User;
 import com.mxz.supermarket.model.UserExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface UserMapper {
 
     int countByExample(UserExample example);
@@ -28,4 +31,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    int addBatchUsers(List<User> users);
 }
