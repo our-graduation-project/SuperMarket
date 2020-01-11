@@ -9,6 +9,8 @@ public class Product {
 
     private String productName;
 
+    private String productCode;
+
     private BigDecimal salePrice;
 
     private BigDecimal purchasePrice;
@@ -25,7 +27,9 @@ public class Product {
 
     private String remark1;
 
+
     private String remark2;
+
 
     public Integer getProductId() {
         return productId;
@@ -35,17 +39,29 @@ public class Product {
         this.productId = productId;
     }
 
+
     public String getProductName() {
         return productName;
     }
+
 
     public void setProductName(String productName) {
         this.productName = productName;
     }
 
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
     public BigDecimal getSalePrice() {
         return salePrice;
     }
+
 
     public void setSalePrice(BigDecimal salePrice) {
         this.salePrice = salePrice;
@@ -55,9 +71,11 @@ public class Product {
         return purchasePrice;
     }
 
+
     public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
+
 
     public String getProviderName() {
         return providerName;
@@ -123,6 +141,7 @@ public class Product {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", productId=").append(productId);
+        sb.append(", productCode=").append(productCode);
         sb.append(", productName=").append(productName);
         sb.append(", providerName=").append(providerName);
         sb.append(", productionTime=").append(productionTime);

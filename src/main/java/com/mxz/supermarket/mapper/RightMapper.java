@@ -3,8 +3,11 @@ package com.mxz.supermarket.mapper;
 import com.mxz.supermarket.model.Right;
 import com.mxz.supermarket.model.RightExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface RightMapper {
 
     int countByExample(RightExample example);

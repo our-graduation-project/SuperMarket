@@ -1,25 +1,18 @@
 package com.mxz.supermarket.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Purchase {
 
     private Integer purchaseId;
 
-    private String purchaseName;
+    private String purchaseNo;
 
-    private String productName;
+    private Integer sumPrice;
 
-    private String typeName;
-
-    private BigDecimal purchasePrice;
-
-    private Integer purchaseCount;
+    private Integer userId;
 
     private Date purchaseTime;
-
-    private Integer paymenttype;
 
     private String remark1;
 
@@ -33,44 +26,28 @@ public class Purchase {
         this.purchaseId = purchaseId;
     }
 
-    public String getPurchaseName() {
-        return purchaseName;
+    public String getPurchaseNo() {
+        return purchaseNo;
     }
 
-    public void setPurchaseName(String purchaseName) {
-        this.purchaseName = purchaseName;
+    public void setPurchaseNo(String purchaseNo) {
+        this.purchaseNo = purchaseNo;
     }
 
-    public String getProductName() {
-        return productName;
+    public Integer getSumPrice() {
+        return sumPrice;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setSumPrice(Integer sumPrice) {
+        this.sumPrice = sumPrice;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public BigDecimal getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(BigDecimal purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public Integer getPurchaseCount() {
-        return purchaseCount;
-    }
-
-    public void setPurchaseCount(Integer purchaseCount) {
-        this.purchaseCount = purchaseCount;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Date getPurchaseTime() {
@@ -79,14 +56,6 @@ public class Purchase {
 
     public void setPurchaseTime(Date purchaseTime) {
         this.purchaseTime = purchaseTime;
-    }
-
-    public Integer getPaymenttype() {
-        return paymenttype;
-    }
-
-    public void setPaymenttype(Integer paymenttype) {
-        this.paymenttype = paymenttype;
     }
 
     public String getRemark1() {
@@ -112,13 +81,10 @@ public class Purchase {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", purchaseId=").append(purchaseId);
-        sb.append(", purchaseName=").append(purchaseName);
+        sb.append(", purchaseNo=").append(purchaseNo);
         sb.append(", purchaseTime=").append(purchaseTime);
-        sb.append(", purchasePrice=").append(purchasePrice);
-        sb.append(", purchaseCount=").append(purchaseCount);
-        sb.append(", productName=").append(productName);
-        sb.append(", paymenttype=").append(paymenttype);
-        sb.append(", typeName=").append(typeName);
+        sb.append(", sumPrice=").append(sumPrice);
+        sb.append(", userId=").append(userId);
         sb.append("]");
         return sb.toString();
     }

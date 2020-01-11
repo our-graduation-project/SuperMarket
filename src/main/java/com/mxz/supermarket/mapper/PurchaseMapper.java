@@ -3,8 +3,10 @@ package com.mxz.supermarket.mapper;
 import com.mxz.supermarket.model.Purchase;
 import com.mxz.supermarket.model.PurchaseExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface PurchaseMapper {
 
     int countByExample(PurchaseExample example);

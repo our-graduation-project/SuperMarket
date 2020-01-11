@@ -20,6 +20,14 @@ public class Provider {
 
     private String remark2;
 
+    public Provider() {
+    }
+
+    public Provider(Integer providerId, String providerName) {
+        this.providerId = providerId;
+        this.providerName = providerName;
+    }
+
     public Integer getProviderId() {
         return providerId;
     }

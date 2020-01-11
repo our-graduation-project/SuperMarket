@@ -3,8 +3,11 @@ package com.mxz.supermarket.mapper;
 import com.mxz.supermarket.model.Producttype;
 import com.mxz.supermarket.model.ProducttypeExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ProducttypeMapper {
 
     int countByExample(ProducttypeExample example);

@@ -3,8 +3,11 @@ package com.mxz.supermarket.mapper;
 import com.mxz.supermarket.model.Rolerightset;
 import com.mxz.supermarket.model.RolerightsetExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface RolerightsetMapper {
 
     int countByExample(RolerightsetExample example);
