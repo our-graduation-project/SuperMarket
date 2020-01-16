@@ -1,6 +1,5 @@
 package com.mxz.supermarket.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Product {
@@ -11,9 +10,9 @@ public class Product {
 
     private String productCode;
 
-    private BigDecimal salePrice;
+    private Double salePrice;
 
-    private BigDecimal purchasePrice;
+    private Double purchasePrice;
 
     private String providerName;
 
@@ -27,9 +26,7 @@ public class Product {
 
     private String remark1;
 
-
     private String remark2;
-
 
     public Integer getProductId() {
         return productId;
@@ -39,16 +36,13 @@ public class Product {
         this.productId = productId;
     }
 
-
     public String getProductName() {
         return productName;
     }
 
-
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
 
     public String getProductCode() {
         return productCode;
@@ -58,24 +52,21 @@ public class Product {
         this.productCode = productCode;
     }
 
-    public BigDecimal getSalePrice() {
+    public Double getSalePrice() {
         return salePrice;
     }
 
-
-    public void setSalePrice(BigDecimal salePrice) {
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
     }
 
-    public BigDecimal getPurchasePrice() {
+    public Double getPurchasePrice() {
         return purchasePrice;
     }
 
-
-    public void setPurchasePrice(BigDecimal purchasePrice) {
+    public void setPurchasePrice(Double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
-
 
     public String getProviderName() {
         return providerName;
@@ -132,7 +123,6 @@ public class Product {
     public void setRemark2(String remark2) {
         this.remark2 = remark2;
     }
-
 
     @Override
     public String toString() {

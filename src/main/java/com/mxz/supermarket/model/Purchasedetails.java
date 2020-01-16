@@ -12,9 +12,9 @@ public class Purchasedetails {
 
     private Integer purchaseCount;
 
-    private Integer purchasePrice;
+    private Double purchasePrice;
 
-    private Integer sumPrice;
+    private Double sumPrice;
 
     private String productCode;
 
@@ -58,19 +58,19 @@ public class Purchasedetails {
         this.purchaseCount = purchaseCount;
     }
 
-    public Integer getPurchasePrice() {
+    public Double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(Integer purchasePrice) {
+    public void setPurchasePrice(Double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    public Integer getSumPrice() {
+    public Double getSumPrice() {
         return sumPrice;
     }
 
-    public void setSumPrice(Integer sumPrice) {
+    public void setSumPrice(Double sumPrice) {
         this.sumPrice = sumPrice;
     }
 

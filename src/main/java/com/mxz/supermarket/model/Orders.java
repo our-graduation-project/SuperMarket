@@ -12,11 +12,11 @@ public class Orders {
 
     private Integer orderStatus;
 
-    private Integer salePrice;
+    private String typeName;
 
     private String productName;
 
-    private String typeName;
+    private Double salePrice;
 
     private String remark1;
 
@@ -25,7 +25,7 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(String orderName, Date orderTime, Integer orderStatus, Integer salePrice, String productName, String typeName) {
+    public Orders(String orderName, Date orderTime, Integer orderStatus, Double salePrice, String productName, String typeName) {
         this.orderName = orderName;
         this.orderTime = orderTime;
         this.orderStatus = orderStatus;
@@ -66,12 +66,12 @@ public class Orders {
         this.orderStatus = orderStatus;
     }
 
-    public Integer getSalePrice() {
-        return salePrice;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setSalePrice(Integer salePrice) {
-        this.salePrice = salePrice;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public String getProductName() {
@@ -82,12 +82,12 @@ public class Orders {
         this.productName = productName;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public Double getSalePrice() {
+        return salePrice;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
     }
 
     public String getRemark1() {

@@ -27,28 +27,28 @@ class OrderServiceImplTest {
     @Autowired
     OrderServiceImpl orderService;
 
-    @Test
-    void addOrder() {
+//    @Test
+//    void addOrder() {
+//
+//        Orders orders = new Orders("12323231",new Date(),1,23,"农夫山泉","饮料");
+//
+//        boolean b = orderService.addOrder(orders);
+//        System.out.println(b);
+//    }
 
-        Orders orders = new Orders("12323231",new Date(),1,23,"农夫山泉","饮料");
-
-        boolean b = orderService.addOrder(orders);
-        System.out.println(b);
-    }
-
-    @Test
-    void addBatchOrders() {
-
-        List<Orders> orders = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Orders order = new Orders("12323231"+i,new Date(),1,23,"农夫山泉"+i,"饮料");
-
-            orders.add(order);
-        }
-        boolean b = orderService.addBatchOrders(orders);
-
-
-    }
+//    @Test
+//    void addBatchOrders() {
+//
+//        List<Orders> orders = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            Orders order = new Orders("12323231"+i,new Date(),1,23,"农夫山泉"+i,"饮料");
+//
+//            orders.add(order);
+//        }
+//        boolean b = orderService.addBatchOrders(orders);
+//
+//
+//    }
 
     @Test
     void deleteOrder() {

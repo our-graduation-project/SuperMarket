@@ -8,7 +8,7 @@ public class Purchase {
 
     private String purchaseNo;
 
-    private Integer sumPrice;
+    private Double sumPrice;
 
     private Integer userId;
 
@@ -34,11 +34,11 @@ public class Purchase {
         this.purchaseNo = purchaseNo;
     }
 
-    public Integer getSumPrice() {
+    public Double getSumPrice() {
         return sumPrice;
     }
 
-    public void setSumPrice(Integer sumPrice) {
+    public void setSumPrice(Double sumPrice) {
         this.sumPrice = sumPrice;
     }
 
@@ -73,6 +73,7 @@ public class Purchase {
     public void setRemark2(String remark2) {
         this.remark2 = remark2;
     }
+
 
     @Override
     public String toString() {

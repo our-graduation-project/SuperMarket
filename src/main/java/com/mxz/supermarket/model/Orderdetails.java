@@ -12,9 +12,9 @@ public class Orderdetails {
 
     private Integer ordersCount;
 
-    private Integer sumPrice;
+    private Double sumPrice;
 
-    private Integer salePrice;
+    private Double salePrice;
 
     private String productCode;
 
@@ -58,19 +58,19 @@ public class Orderdetails {
         this.ordersCount = ordersCount;
     }
 
-    public Integer getSumPrice() {
+    public Double getSumPrice() {
         return sumPrice;
     }
 
-    public void setSumPrice(Integer sumPrice) {
+    public void setSumPrice(Double sumPrice) {
         this.sumPrice = sumPrice;
     }
 
-    public Integer getSalePrice() {
+    public Double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Integer salePrice) {
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -81,7 +81,6 @@ public class Orderdetails {
     public void setProductCode(String productCode) {
         this.productCode = productCode;
     }
-
 
     @Override
     public String toString() {
