@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="main-wrapper">
+    <div class="main-wrapper" id="editProduct">
         <div class="header">
 			<div class="header-left">
 				<a href="index.html" class="logo">
@@ -93,7 +93,7 @@
 						<li class="submenu">
                             <a href="#"><i class="fa fa-columns"></i> <span>个人中心</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="forgot-password.html">更改密码 </a></li>
+                                <li><a href="admin-modifypassword.html">更改密码 </a></li>
                                 <li><a href="login.html">退出登录 </a></li>
                             </ul>
                         </li>
@@ -118,55 +118,55 @@
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">商品编号</label>
-                                                <input type="text" class="form-control floating" value="1" readonly="readonly">
+                                                <input v-model="product.productCode" type="text" class="form-control floating" value="1" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">商品名称</label>
-                                                <input type="text" class="form-control floating" value="食品货架">
+                                                <input v-model="product.productName" type="text" class="form-control floating" value="食品货架">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">商品供货商名称</label>
-                                                <input type="text" class="form-control floating" value="四楼">
+                                                <input v-model="product.providerName" type="text" class="form-control floating" value="四楼">
                                             </div>
                                         </div>
                                        <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">商品分类名称</label>
-                                                <input type="text" class="form-control floating" value="食用油">
+                                                <input v-model="product.typeName" type="text" class="form-control floating" value="食用油">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">进价</label>
-                                                <input type="text" class="form-control floating" value="50">
+                                                <input v-model="product.purchasePrice" type="text" class="form-control floating" value="50">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">售价</label>
-                                                <input type="text" class="form-control floating" value="15">
+                                                <input v-model="product.salePrice" type="text" class="form-control floating" value="15">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">生产日期</label>
-                                                <input type="text" class="form-control floating" value="">
+                                                <input v-model="product.productionTime" type="text" class="form-control floating" value="">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
-                                                <label class="focus-label">保质期</label>
-                                                <input type="text" class="form-control floating" value="15">
+                                                <label class="focus-label">保质期(天)</label>
+                                                <input v-model="product.qualityTime" type="text" class="form-control floating" value="15">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">销售量</label>
-                                                <input type="text" class="form-control floating" value="15">
+                                                <input v-model="product.saleNum" type="text" class="form-control floating" value="15">
                                             </div>
                                         </div>
                                     </div>
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                     <div class="text-center m-t-20">
-                        <button class="btn btn-primary submit-btn" type="button">保存</button>
+                        <button @click="editProduct()" class="btn btn-primary submit-btn"  type="button">保存</button>
                     </div>
                 </form>
             </div>
@@ -190,6 +190,87 @@
     <script src="../js/moment.min.js"></script>
     <script src="../js/bootstrap-datetimepicker.min.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../plugins/js/vue.js"></script>
+    <script src="../plugins/js/public.js"></script>
+    <script>
+        let editProductVue = new Vue({
+            el:"#editProduct",
+            created(){
+                function getQueryStringChinese(id) {
+                    var reg = new RegExp("(^|&)" + id + "=([^&]*)(&|$)", "i");
+                    var r = window.location.search.substr(1).match(reg);
+                    if (r != null) return decodeURI(r[2]);
+                    return null;
+                }
+                var id = getQueryStringChinese("productId");
+                if(isNull(id)){
+                    alert("加载产品时发生错误！")
+                }else{
+                    this.getData(id);
+                }
+            },
+            data:{
+                product:{},
+            },
+            methods:{
+                editProduct(){
+                    let data = {
+                        "productId":editProductVue.product.productId,
+                        "productCode":editProductVue.product.productCode,
+                        "productName":editProductVue.product.productName,
+                        "salePrice":editProductVue.product.salePrice,
+                        "purchasePrice":editProductVue.product.purchasePrice,
+                        "typeName":editProductVue.product.typeName,
+                        "providerName":editProductVue.product.providerName,
+                        "productionTime":editProductVue.product.productionTime,
+                        "qualityTime":editProductVue.product.qualityTime,
+                        "saleNum":editProductVue.product.saleNum,
+                    };
+                    $.ajax({
+                        //请求方式
+                        type : "POST",
+                        //请求的媒体类型
+                        contentType: "application/json;charset=UTF-8",
+                        //请求地址
+                        url : "http://localhost:8080/supermarket/admin/product/updateproduct",
+                        //数据，json字符串
+                        data : JSON.stringify(data),
+                        success: function (result) {
+                            if (result.result) {
+                                alert("修改产品成功！");
+                            }
+                            else {
+                                alert("修改产品失败！")
+                            }
+                        },
+                        error: function () {
+                            alert("操作失败");
+                        }
+                    });
+                },
+                getData(id){
+                    $.ajax({
+                        type:"GET",
+                        contentType: "application/json;charset=UTF-8",
+                        url: "http://localhost:8080/supermarket/admin/product/toproductdetail/"+id,
+                        success: function (result) {
+                            if (result.result) {
+                                editProductVue.product = result.data;
+                            }
+                            else {
+                                alert("加载失败！")
+                            }
+                        },
+                        error: function () {
+                            alert("操作失败");
+                        }
+
+                    });
+                }
+            }
+
+        });
+    </script>
 </body>
 
 </html>

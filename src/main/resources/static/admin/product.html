@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="main-wrapper">
+    <div class="main-wrapper" id="productVue">
         <div class="header">
 			<div class="header-left">
 				<a href="index.html" class="logo">
@@ -92,7 +92,7 @@
 						<li class="submenu">
                             <a href="#"><i class="fa fa-columns"></i> <span>个人中心</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="forgot-password.html">更改密码 </a></li>
+								<li><a href="admin-modifypassword.html">更改密码 </a></li>
                                 <li><a href="login.html">退出登录 </a></li>
                             </ul>
                         </li>
@@ -107,42 +107,55 @@
                         <h4 class="page-title">商品列表</h4>
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-shelf.html" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i>增加商品</a>
+                        <a href="add-product.html" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i>增加商品</a>
                     </div>
                 </div>
+				<div class="row filter-row">
+					<div class="col-sm-6 col-md-3">
+						<div class="form-group form-focus">
+							<label class="focus-label">商品名称</label>
+							<input type="text" class="form-control floating" v-model="searchProductName">
+						</div>
+					</div>.
+					<div class="col-sm-6 col-md-3">
+						<a @click="searchProductByName()" style="width: 120px;" class="btn btn-success btn-block">查询</a>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
 							<table class="table table-striped custom-table">
 								<thead>
 									<tr>
-										<th>商品编号</th>
+										<th>商品编码</th>
 										<th>商品名称</th>
 										<th>售价</th>
 										<th>进价</th>
 										<th>商品供货商名称</th>
 										<th>商品分类名称</th>
 										<th>生产日期</th>
+										<th>保质期（天）</th>
 										<th>销售量</th>
 										<th class="text-right">操作</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody  v-for="(product ,index) in products">
 									<tr>
-										<td>0001</td>
-										<td>食人鱼</td>
-										<td>￥25</td>
-										<td>￥15</td>
-										<td>水产养殖场</td>
-										<td>鲜品</td>
-										<td>2019-11-06</td>
-										<td>36</td>
+										<td>{{product.productCode}}</td>
+										<td>{{product.productName}}</td>
+										<td>{{product.salePrice}}</td>
+										<td>{{product.purchasePrice}}</td>
+										<td>{{product.providerName}}</td>
+										<td>{{product.typeName}}</td>
+										<td>{{product.productionTime}}</td>
+										<td>{{product.qualityTime}}</td>
+										<td>{{product.saleNum}}</td>
 										<td class="text-right">
 											<div class="dropdown dropdown-action">
 												<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 												<div class="dropdown-menu dropdown-menu-right">
-													<a class="dropdown-item" href="edit-product.html"><i class="fa fa-pencil m-r-5"></i>编辑</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_appointment"><i class="fa fa-trash-o m-r-5"></i> 删除</a>
+													<a class="dropdown-item" @click="toProductDetail(index)"><i class="fa fa-pencil m-r-5"></i>编辑</a>
+													<a class="dropdown-item" @click="delId(index)" data-toggle="modal" data-target="#delete_appointment"><i class="fa fa-trash-o m-r-5"></i> 删除</a>
 												</div>
 											</div>
 										</td>
@@ -160,7 +173,7 @@
 							<img src="../img/sent.png" alt="" width="50" height="46">
 							<h3>您确定要删除吗?</h3>
 							<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">取消</a>
-								<button type="submit" class="btn btn-danger">删除</button>
+								<button  @click="delProduct()" class="btn btn-danger">删除</button>
 							</div>
 						</div>
 					</div>
@@ -185,6 +198,102 @@
                 });
             });
      </script>
+    <script src="../plugins/js/vue.js"></script>
+    <script src="../plugins/js/public.js"></script>
+    <script>
+		let productVue = new Vue({
+			el:'#productVue',
+			created(){
+				this.getData();
+			},
+			data:{
+				products:[],
+				productPageInfo:[],
+				searchProductName:"",
+				delProductId:"",
+			},
+			methods:{
+				toProductDetail(index){
+					let id =productVue.products[index].productId;
+					window.location.href="edit-product.html?productId="+id;
+				},
+				searchProductByName(){
+					let data = {"productName":productVue.searchProductName};
+					$.ajax({
+						//请求方式
+						type : "POST",
+						//请求的媒体类型
+						contentType: "application/json;charset=UTF-8",
+						//请求地址
+						url : "http://localhost:8080/supermarket/admin/product/searchproductbyname",
+						//数据，json字符串
+						data : JSON.stringify(data),
+						success: function (result) {
+							if (result.result) {
+								productVue.productPageInfo = result.data;
+								productVue.products = result.data.list;
+							}
+							else {
+								alert("加载数据发生未知错误！")
+							}
+						},
+						error: function () {
+							alert("操作失败");
+						}
+
+					});
+				},
+				delId(index){
+					productVue.delProductId = productVue.products[index].productId;
+				},
+				delProduct(){
+				   $.ajax({
+					   type:"GET",
+					   contentType: "application/json;charset=UTF-8",
+					   url: "http://localhost:8080/supermarket/admin/product/delproduct/"+productVue.delProductId,
+					   success: function (result) {
+						   if (result.result) {
+							   alert("删除成功！");
+							   window.location.reload();
+						   }
+						   else {
+							   alert("删除失败！")
+						   }
+					   },
+					   error: function () {
+						alert("操作失败");
+					}
+				   });
+				},
+				getData(){
+					let data = {};
+					$.ajax({
+						//请求方式
+						type : "POST",
+						//请求的媒体类型
+						contentType: "application/json;charset=UTF-8",
+						//请求地址
+						url : "http://localhost:8080/supermarket/admin/product/loadallproduct",
+						//数据，json字符串
+						data : JSON.stringify(data),
+						success: function (result) {
+							if (result.result) {
+								productVue.productPageInfo = result.data;
+								productVue.products = result.data.list;
+							}
+							else {
+								alert("加载数据发生未知错误！")
+							}
+						},
+						error: function () {
+							alert("操作失败");
+						}
+
+					});
+				}
+			}
+		})
+	</script>
 </body>
 
 </html>

@@ -36,7 +36,7 @@ public class SendRegisterToQueue {
      * @param jsonObject
      */
     public void sendToQueue(JSONObject jsonObject){
-        senderToQueue.sendMessage(QueueEnum.QUEUE_SENT_REGISTER_CODE.getExchange(),QueueEnum.QUEUE_SENT_REGISTER_CODE.getRouteKey(),setMessage(jsonObject.toJSONString()));
+        senderToQueue.sendMessage(QueueEnum.QUEUE_SENT_EMAIL_CODE.getExchange(),QueueEnum.QUEUE_SENT_EMAIL_CODE.getRouteKey(),setMessage(jsonObject.toJSONString()));
     }
 
 

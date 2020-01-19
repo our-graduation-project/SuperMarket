@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="main-wrapper">
+    <div class="main-wrapper" id="addAdmin">
         <div class="header">
 			<div class="header-left">
 				<a href="index.html" class="logo">
@@ -112,41 +112,41 @@
                         <form>
                             <div class="form-group">
                                 <label>管理员名称</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="admin.adminName">
                             </div>
                             <div class="form-group">
                                 <label>管理员昵称</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="admin.nickName">
                             </div> 
                             <div class="form-group">
                                 <label>管理员密码</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="admin.password">
                             </div> 
                             <div class="form-group">
                                 <label>邮箱</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="admin.email">
                             </div>
                             <div class="form-group">
                                 <label>电话</label>
-                                <input class="form-control" type="tel">
+                                <input class="form-control" type="tel" v-model="admin.phone">
                             </div>
                             <div class="form-group">
                                 <label class="focus-label">性别</label>
-                                <select class="select form-control floating">
-                                	<option value="male selected">男</option>
-                                    <option value="female">女</option>
+                                <select id="sex" class="select form-control floating" >
+                                	<option value="false">男</option>
+                                    <option value="true">女</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>地址</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="admin.address">
                             </div>
                             <div class="form-group">
                                 <label>年龄</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="admin.age">
                             </div>
                             <div class="m-t-20 text-center">
-                                <a href="admin.html" class="btn btn-primary submit-btn">增加</a>
+                                <a @click="add()" class="btn btn-primary submit-btn">增加</a>
                                 <a href="admin.html" class="btn btn-primary submit-btn">返回</a>
                             </div>
                         </form>
@@ -163,6 +163,68 @@
     <script src="../js/select2.min.js"></script>
     <script src="../js/tagsinput.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../plugins/js/vue.js"></script>
+    <script src="../plugins/js/public.js"></script>
+    <script>
+
+
+        let addAdmin = new Vue({
+            el:'#addAdmin',
+            data:{
+                admin:{},
+            },
+            methods:{
+                add(){
+                    addAdmin.admin.sex = $("#sex").val();
+                    if(
+                        isNull(addAdmin.admin.adminName) ||
+                        isNull(addAdmin.admin.nickName) ||
+                        isNull(addAdmin.admin.age) ||
+                        isNull(addAdmin.admin.phone) ||
+                        isNull(addAdmin.admin.email) ||
+                        isNull(addAdmin.admin.sex) ||
+                        isNull(addAdmin.admin.password) ||
+                        isNull(addAdmin.admin.address)
+                    ){
+                        alert("请确认输入不能为空！");
+                    }else{
+                        let data = {
+                            "adminName":addAdmin.admin.adminName,
+                            "nickName":addAdmin.admin.nickName,
+                            "age":addAdmin.admin.age,
+                            "phone":addAdmin.admin.phone,
+                            "email":addAdmin.admin.email,
+                            "sex":addAdmin.admin.sex,
+                            "address":addAdmin.admin.address,
+                            "password":addAdmin.admin.password,
+                        };
+                            $.ajax({
+                                //请求方式
+                                type: "POST",
+                                //请求的媒体类型
+                                contentType: "application/json;charset=UTF-8",
+                                //请求地址
+                                url: "http://localhost:8080/supermarket/admin/addadmin",
+                                //数据，json字符串
+                                data: JSON.stringify(data),
+                                success: function (result) {
+                                    if (result.result) {
+                                        alert(result.message);
+                                    } else {
+                                        alert(result.message);
+                                    }
+                                },
+                                error: function () {
+                                    alert("操作失败");
+                                }
+                            });
+
+                        }
+
+                },
+            }
+        });
+    </script>
 </body>
 
 </html>

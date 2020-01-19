@@ -76,6 +76,6 @@ public class SendMail implements Serializable {
     }
 
     public static void main(String[] args) {
-        sendMail("验证码","111212","1547527394@qq.com");
+        sendMail("验证码","111212","2454714424@qq.com");
     }
 }

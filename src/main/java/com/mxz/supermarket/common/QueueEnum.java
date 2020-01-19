@@ -11,7 +11,7 @@ public enum QueueEnum {
     /**
      * 邮件消息通知队列
      */
-    QUEUE_SENT_EAILL("yuanda_direct", "yuanda_sent_email", "yuanda_sent_email"),
+    QUEUE_SENT_EAILL("yuanda_direct", "supermarket_sent_register", "yuanda_sent_email"),
 
     /**
      * 消息通知队列
@@ -19,9 +19,9 @@ public enum QueueEnum {
     QUEUE_SENT_NOTIFICATION("yuanda_notification_direct", "yuanda_sent_notification", "yuanda_sent_notification"),
 
     /**
-     * 注册码发送队列
+     * 邮箱验证码发送队列
      */
-    QUEUE_SENT_REGISTER_CODE("yuanda_register_direct","yuanda_sent_register","yuanda_sent_register"),
+    QUEUE_SENT_EMAIL_CODE("supermarket_email_direct","supermarket_sent_email","supermarket_sent_email"),
 
     /**
      * esarticle的发送队列

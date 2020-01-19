@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="main-wrapper">
+    <div class="main-wrapper" id="editAdmin">
         <div class="header">
 			<div class="header-left">
 				<a href="index.html" class="logo">
@@ -112,70 +112,57 @@
                         <h3 class="card-title">基本信息</h3>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="profile-img-wrap">
-                                    <img class="inline-block" src="assets/img/user.jpg" alt="user">
-                                    <div class="fileupload btn">
-                                        <span class="btn-text">编辑</span>
-                                        <input class="upload" type="file">
-                                    </div>
-                                </div>
                                 <div class="profile-basic">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">管理员编号</label>
-                                                <input type="text" class="form-control floating" value="1">
+                                                <input type="text" class="form-control floating" readonly v-model="admin.adminId">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">管理员名称</label>
-                                                <input type="text" class="form-control floating" value="张三">
+                                                <input type="text" class="form-control floating" v-model="admin.adminName">
                                             </div>
                                         </div>
                                        <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">管理员昵称</label>
-                                                <input type="text" class="form-control floating" value="你好呀！">
+                                                <input type="text" class="form-control floating" v-model="admin.nickName">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus select-focus">
                                                 <label class="focus-label">性别</label>
-                                                <select class="select form-control floating">
-                                                    <option value="male selected">男</option>
-                                                    <option value="female">女</option>
+                                                <select id="sex" class="select form-control floating" v-model="admin.sex" >
+                                                    <option value="false">男</option>
+                                                    <option value="true">女</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">邮箱</label>
-                                                <input type="text" class="form-control floating" value="1761432189@qq.com">
+                                                <input type="text" class="form-control floating" v-model="admin.email">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">电话</label>
-                                                <input type="tel" class="form-control floating" value="15243896307">
+                                                <input type="tel" class="form-control floating" v-model="admin.phone">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">年龄</label>
-                                                <input type="text" class="form-control floating" value="17">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group form-focus">
-                                                <label class="focus-label">薪水</label>
-                                                <input type="text" class="form-control floating" value="17614">
+                                                <input type="text" class="form-control floating" v-model="admin.age">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-focus">
                                                 <label class="focus-label">地址</label>
-                                                <input type="text" class="form-control floating" value="张三">
+                                                <input type="text" class="form-control floating" v-model="admin.address">
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +171,7 @@
                         </div>
                     </div>
                     <div class="text-center m-t-20">
-                        <button class="btn btn-primary submit-btn" type="button">Save</button>
+                        <button class="btn btn-primary submit-btn" @click="editAdmin()" type="button">Save</button>
                     </div>
                 </form>
             </div>
@@ -199,6 +186,71 @@
     <script src="../js/moment.min.js"></script>
     <script src="../js/bootstrap-datetimepicker.min.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../plugins/js/vue.js"></script>
+    <script src="../plugins/js/public.js"></script>
+    <script>
+        let editAdmin = new Vue({
+           el:'#editAdmin',
+           created(){
+               this.getData();
+           },
+           data:{
+                admin:{},
+           },
+           methods:{
+               editAdmin(){
+                   editAdmin.admin.sex = $("#sex").val();
+                   let data = {
+                       "adminId":editAdmin.admin.adminId,
+                       "adminName":editAdmin.admin.adminName,
+                       "nickName":editAdmin.admin.nickName,
+                       "age":editAdmin.admin.age,
+                       "phone":editAdmin.admin.phone,
+                       "email":editAdmin.admin.email,
+                       "sex":editAdmin.admin.sex,
+                       "address":editAdmin.admin.address,
+                   };
+                   $.ajax({
+                       type:"POST",
+                       contentType: "application/json;charset=UTF-8",
+                       url: "http://localhost:8080/supermarket/admin/updateadmin",
+                       data : JSON.stringify(data),
+                       success: function (result) {
+                           if (result.result) {
+                               alert(result.message);
+                           }
+                           else {
+                               alert("修改失败！");
+                           }
+                       },
+                       error: function () {
+                           alert("操作失败");
+                       }
+
+                   });
+               },
+               getData(){
+                   $.ajax({
+                       type:"GET",
+                       contentType: "application/json;charset=UTF-8",
+                       url: "http://localhost:8080/supermarket/admin/loadownadmin",
+                       success: function (result) {
+                           if (result.result) {
+                               editAdmin.admin = result.data;
+                           }
+                           else {
+                               alert("加载失败！")
+                           }
+                       },
+                       error: function () {
+                           alert("操作失败");
+                       }
+
+                   });
+               }
+           }
+        });
+    </script>
 </body>
 
 </html>

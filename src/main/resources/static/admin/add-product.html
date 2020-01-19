@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="../css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="../css/tagsinput.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
 		<script src="../js/html5shiv.min.js"></script>
 		<script src="../js/respond.min.js"></script>
@@ -18,7 +21,7 @@
 </head>
 
 <body>
-    <div class="main-wrapper">
+    <div class="main-wrapper" id="addProduct">
         <div class="header">
 			<div class="header-left">
 				<a href="index.html" class="logo">
@@ -92,7 +95,7 @@
 						<li class="submenu">
                             <a href="#"><i class="fa fa-columns"></i> <span>个人中心</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="forgot-password.html">更改密码 </a></li>
+                                <li><a href="admin-modifypassword.html">更改密码 </a></li>
                                 <li><a href="login.html">退出登录 </a></li>
                             </ul>
                         </li>
@@ -111,39 +114,54 @@
                     <div class="col-lg-8 offset-lg-2">
                         <form>
                             <div class="form-group">
+                                <label>商品编码</label>
+                                <input class="form-control" type="text" v-model="product.productCode">
+                            </div>
+                            <div class="form-group">
                                 <label>商品名称</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="product.productName">
                             </div>
                             <div class="form-group">
                                 <label>售价</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="product.salePrice">
                             </div> 
                             <div class="form-group">
                                 <label>进价</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="product.purchasePrice">
                             </div> 
                             <div class="form-group">
                                 <label>商品分类名称</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="product.typeName">
                             </div> 
                             <div class="form-group">
                                 <label>商品供货商名称</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="product.providerName">
                             </div> 
                             <div class="form-group">
-                                <label>生产日期</label>
-                                <input class="form-control" type="text">
+                                <div class="row">
+                                    <div class='col-sm-6'>
+                                        <div class="form-group">
+                                            <label>选择生产日期：</label>
+                                            <!--指定 date标记-->
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input type='text' class="form-control"  id="productionTime"/>
+                                                <span class="input-group-addon">
+                                                      <span class="glyphicon glyphicon-calendar" ></span>
+                                               </span>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="form-group">
-                                <label>保质期</label>
-                                <input class="form-control" type="text">
+                                <label>保质期（天）</label>
+                                <input class="form-control" type="text" v-model="product.qualityTime">
                             </div>
                             <div class="form-group">
                                 <label>销售量</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" v-model="product.saleNum">
                             </div>
                             <div class="m-t-20 text-center">
-                                <a href="product.html" class="btn btn-primary submit-btn">增加</a>
+                                <a @click="addProduct()" class="btn btn-primary submit-btn">增加</a>
                                 <a href="product.html" class="btn btn-primary submit-btn">返回</a>
                             </div>
                         </form>
@@ -158,8 +176,85 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.slimscroll.js"></script>
     <script src="../js/select2.min.js"></script>
-    <script src="../js/tagsinput.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../plugins/js/vue.js"></script>
+    <script src="../plugins/js/public.js"></script>
+    <script>
+        var dateFormat =/^(\d{4})-(\d{2})-(\d{2})$/;
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.locale('zh-cn')
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'YYYY-MM-DD hh:mm',
+                locale: moment.locale('zh-cn')
+            });
+        });
+
+        let addProduct = new Vue({
+           el:'#addProduct',
+           data:{
+               product:{},
+           },
+           methods:{
+               addProduct(){
+                   addProduct.product.productionTime = $(" #productionTime ").val();
+                   if(dateFormat.test(addProduct.product.productionTime)){
+                       //true，是yyyy-MM-dd格式
+
+
+                   if(isNull(addProduct.product.productCode) ||
+                      isNull(addProduct.product.productName) ||
+                      isNull(addProduct.product.salePrice) ||
+                      isNull(addProduct.product.purchasePrice) ||
+                      isNull(addProduct.product.typeName) ||
+                      isNull(addProduct.product.providerName)){
+                       alert("请确认输入！");
+                   }else{
+                       let data = {
+                           "productCode": addProduct.product.productCode,
+                           "productName": addProduct.product.productName,
+                           "salePrice": addProduct.product.salePrice,
+                           "purchasePrice": addProduct.product.purchasePrice,
+                           "typeName": addProduct.product.typeName,
+                           "providerName": addProduct.product.providerName,
+                           "productionTime": addProduct.product.productionTime,
+                           "qualityTime": addProduct.product.qualityTime,
+                           "saleNum": addProduct.product.saleNum,
+                       };
+                       $.ajax({
+                           //请求方式
+                           type: "POST",
+                           //请求的媒体类型
+                           contentType: "application/json;charset=UTF-8",
+                           //请求地址
+                           url: "http://localhost:8080/supermarket/admin/product/addproduct",
+                           //数据，json字符串
+                           data: JSON.stringify(data),
+                           success: function (result) {
+                               if (result.result) {
+                                   alert(result.message);
+                               } else {
+                                   alert(result.message);
+                               }
+                           },
+                           error: function () {
+                               alert("操作失败");
+                           }
+                       });
+
+                   }
+                   }else{
+                       //false,不是yyyy-MM-dd格式
+                       alert("日期格式错误！");
+                   }
+               },
+           }
+        });
+    </script>
 </body>
 
 </html>
